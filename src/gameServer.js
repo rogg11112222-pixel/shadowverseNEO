@@ -100,6 +100,10 @@ function publish(room) {
   });
 }
 
+function playGameSound(room, soundName) {
+  io.to(room.code).emit("gameSound", soundName);
+}
+
 function getRoom(socket) {
   return rooms.get(socket.data.roomCode);
 }
@@ -203,6 +207,11 @@ io.on("connection", socket => {
     }
 
     const enemy = enemyOf(room, player);
+    playGameSound(
+      room,
+      card.type === "follower" ? "summon" : "magic"
+    );
+    playGameSound(room, "attack");
     player.mana -= card.cost;
     player.hand.splice(index, 1);
 
@@ -237,6 +246,7 @@ io.on("connection", socket => {
       }
     }
 
+    playGameSound(room, "impact");
     finishIfNeeded(room);
     publish(room);
   });
@@ -291,6 +301,7 @@ io.on("connection", socket => {
     if (!card) return reject(socket, "フォロワーが見つかりません。");
     if (card.evolved) return reject(socket, "このフォロワーは進化済みです。");
 
+    playGameSound(room, "evolve");
     card.evolved = true;
     card.atk += 2;
     card.hp += 2;

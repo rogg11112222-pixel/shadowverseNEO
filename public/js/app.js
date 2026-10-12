@@ -9,6 +9,11 @@ const esc = value => String(value ?? "").replace(/[&<>\"']/g, c => ({
 }[c]));
 
 socket.on("connect", () => $("connection").textContent = "サーバー接続済み");
+socket.on("gameSound", soundName => {
+  if (window.GameAudio) {
+    window.GameAudio.play(soundName);
+  }
+});
 socket.on("disconnect", () => $("connection").textContent = "接続が切れました");
 socket.on("connect_error", () => $("connection").textContent = "接続エラー");
 
@@ -26,6 +31,16 @@ socket.on("notice", message => {
 socket.on("state", state => {
   game = state;
   attackerId = null;
+  if (window.GameAudio) {
+    if (!state.started || state.over) {
+      // 対戦開始前、または対戦終了後はホームBGM
+      GameAudio.changeBgm("homeBgm");
+    } else {
+      // 対戦中は対戦BGM
+      GameAudio.changeBgm("bgm");
+    }
+  }
+
   render();
 });
 
