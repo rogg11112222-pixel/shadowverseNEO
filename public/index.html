@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ECLIPSE DUEL</title>
+<script src="/socket.io/socket.io.js"></script>
+<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header>
+  <div>
+    <div class="logo">ShadowverseNEO</div>
+    <div class="small">KMRのその先へ...</div>
+  </div>
+  <div class="small" id="connection">接続中...</div>
+</header>
+
+<main>
+  <section class="panel" id="lobby">
+    <h3>友達と対戦する</h3>
+    <div class="row">
+      <label>プレイヤー名<br><input id="name" maxlength="16" value="星詠みの旅人"></label>
+      <button class="gold" onclick="createRoom()">ルームを作る</button>
+    </div>
+    <hr>
+    <div class="row">
+      <label>ルームコード<br><input id="code" maxlength="6" placeholder="例：A1B2C3"></label>
+      <button onclick="joinRoom()">ルームに参加</button>
+    </div>
+    <p class="small">ホストがルームを作成し、表示されたコードを友達に共有してください。</p>
+  </section>
+
+  <section class="panel">
+    <div class="row">
+      <div><span class="small">ROOM CODE</span><div id="roomCode">------</div></div>
+      <div id="turn" class="small">対戦相手を待っています</div>
+    </div>
+    <p id="notice">ルームを作成するか、友達のルームに参加してください。</p>
+  </section>
+
+  <section class="panel">
+    <div class="row">
+      <div>
+        <div class="small">ENEMY LEADER</div>
+        <strong id="enemyName">対戦相手</strong>
+        <div class="hp" id="enemyHp">-- HP</div>
+      </div>
+      <div class="mana" id="enemyMana">マナ --</div>
+      <div class="small" id="enemyHand">手札 -- 枚</div>
+    </div>
+    <hr>
+    <div class="small">ENEMY FIELD</div>
+    <div id="enemyField" class="field"></div>
+    <hr>
+    <div class="small">YOUR FIELD</div>
+    <div id="myField" class="field"></div>
+    <div class="row">
+      <div>
+        <div class="small">YOUR LEADER</div>
+        <strong id="myName">あなた</strong>
+        <div class="hp" id="myHp">20 HP</div>
+      </div>
+      <div>
+        <div class="mana" id="myMana">マナ 0 / 0</div>
+        <div class="small" id="myEvo">進化 2</div>
+      </div>
+    </div>
+    <div class="row" style="justify-content:center;margin-top:12px">
+      <button onclick="cancelAttack()">選択解除</button>
+      <button class="gold" id="end" onclick="endTurn()">ターン終了 ➜</button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="row"><h3>YOUR HAND</h3><span class="small" id="deckCount"></span></div>
+    <div id="hand" class="hand"></div>
+    <p class="small">カードを出すにはカードをクリック。攻撃するには自分のフォロワーを選び、対象をクリックします。</p>
+  </section>
+
+  <section class="panel">
+    <div class="small">BATTLE LOG</div>
+    <div id="logs">戦いの記録がここに表示されます。</div>
+  </section>
+</main>
+
+  <script src="/js/app.js" defer></script>
+</body>
+</html>
