@@ -78,6 +78,21 @@
     </div>
   </section>
 
+  <section class="panel" id="deckBuilder" style="display:none;">
+    <div class="row">
+      <h3>デッキ構築</h3>
+      <span class="small" id="deckSummary">0 / 20 枚</span>
+    </div>
+    <div class="row ready-row">
+      <div class="ready-status" id="deckReadyStatus">自分: 準備中</div>
+      <div class="ready-status" id="enemyReadyStatus">相手: 待機中</div>
+    </div>
+    <div id="deckLibrary" class="deck-library"></div>
+    <div class="row" style="justify-content:center;margin-top:12px;">
+      <button id="submitDeckBtn" class="gold" onclick="submitDeck()">このデッキで対戦開始</button>
+    </div>
+  </section>
+
   <section class="panel">
     <div class="row"><h3>YOUR HAND</h3><span class="small" id="deckCount"></span></div>
     <div id="hand" class="hand"></div>
